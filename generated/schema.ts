@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Gravatar extends Entity {
+export class TokenTransfer extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -19,18 +19,18 @@ export class Gravatar extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Gravatar entity without an ID");
+    assert(id != null, "Cannot save TokenTransfer entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Gravatar must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type TokenTransfer must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Gravatar", id.toString(), this);
+      store.set("TokenTransfer", id.toString(), this);
     }
   }
 
-  static load(id: string): Gravatar | null {
-    return changetype<Gravatar | null>(store.get("Gravatar", id));
+  static load(id: string): TokenTransfer | null {
+    return changetype<TokenTransfer | null>(store.get("TokenTransfer", id));
   }
 
   get id(): string {
@@ -42,48 +42,39 @@ export class Gravatar extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get owner(): Bytes {
-    let value = this.get("owner");
-    return value!.toBytes();
+  get from_account(): string {
+    let value = this.get("from_account");
+    return value!.toString();
   }
 
-  set owner(value: Bytes) {
-    this.set("owner", Value.fromBytes(value));
+  set from_account(value: string) {
+    this.set("from_account", Value.fromString(value));
   }
 
-  get operation1(): i32 {
-    let value = this.get("operation1");
+  get to_account(): string {
+    let value = this.get("to_account");
+    return value!.toString();
+  }
+
+  set to_account(value: string) {
+    this.set("to_account", Value.fromString(value));
+  }
+
+  get operation(): i32 {
+    let value = this.get("operation");
     return value!.toI32();
   }
 
-  set operation1(value: i32) {
-    this.set("operation1", Value.fromI32(value));
+  set operation(value: i32) {
+    this.set("operation", Value.fromI32(value));
   }
 
-  get receiver(): Bytes {
-    let value = this.get("receiver");
-    return value!.toBytes();
-  }
-
-  set receiver(value: Bytes) {
-    this.set("receiver", Value.fromBytes(value));
-  }
-
-  get operation2(): i32 {
-    let value = this.get("operation2");
-    return value!.toI32();
-  }
-
-  set operation2(value: i32) {
-    this.set("operation2", Value.fromI32(value));
-  }
-
-  get money(): BigInt {
-    let value = this.get("money");
+  get value(): BigInt {
+    let value = this.get("value");
     return value!.toBigInt();
   }
 
-  set money(value: BigInt) {
-    this.set("money", Value.fromBigInt(value));
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
   }
 }

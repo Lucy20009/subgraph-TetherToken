@@ -1,25 +1,25 @@
 specVersion: 0.0.4
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: TetherToken for Ethereum
+repository: https://etherscan.io/address/0xdac17f958d2ee523a2206206994597c13d831ec7#code
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Gravity
+    name: TetherToken
     network: mainnet
     source:
-      address: '0xcA3b4407B78240dD08a028e949411c61bD2d130F'
-      abi: Gravity
+      address: '0x3cE01808aaaBbde5612683033D87Fd671ae75A79'
+      abi: TetherToken
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - Gravatar
+        - TokenTransfer
       abis:
-        - name: Gravity
-          file: ./abis/Gravity.json
+        - name: TetherToken
+          file: ./abis/TetherToken.json
       eventHandlers:
-        - event: NewGravatar(uint256,address,address,uint256)
-          handler: handleNewGravatar
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
       file: ./src/mapping.ts
